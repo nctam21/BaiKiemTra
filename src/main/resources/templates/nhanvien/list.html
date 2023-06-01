@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh Sách Nhân Viên</title>
+  <th:block th:replace="layout::link-css"></th:block>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<style>
+  table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+tr:hover {
+  background-color: #f5f5f5;
+}
+tr:nth-child(even) {
+  background-color: #45b5d1;
+}
+tr:nth-child(odd) {
+  background-color: #4584d1;
+}
+table {
+  border: 1px solid #ccc;
+}
+td:nth-child(1) {
+  background-color: #7445d1;
+  font-weight: bold;
+}
+</style>
+<body>
+<th:block th:replace="layout::header"></th:block>
+<div class="container">
+  <h1 th:text=${title}></h1>
+  <table class="table">
+    <tr>
+      <th>Mã Nhân Viên</th>
+      <th>Tên Nhân Viên</th>
+      <th>Giới tính</th>
+      <th>Nơi sinh</th>
+      <th>Tên phòng</th>
+      <th>Lương</th>
+      <th>Action</th>
+    </tr>
+    <tr th:each="NhanVien: ${NhanVien}">
+      <td th:text="${NhanVien.Ma_NV}"></td>
+      <td th:text="${NhanVien.Ten_NV}"></td>
+      <td th:if="${NhanVien.Phai == 'Nam'}">
+        <img src="/static/image/man.png" alt="Nam" style="with:100px;height:100px" >
+      </td>
+      <td th:if="${NhanVien.Phai == 'Nu'}">
+        <img src="/static/image/women.png" alt="Nữ" style="with:100px;height:100px">
+      </td>
+      <td th:text="${NhanVien.Noi_Sinh}"></td>
+      <td th:text="${NhanVien.PhongBan.Ten_Phong}"></td>
+      <td th:text="${NhanVien.Luong}"></td>
+      <td>
+        <a th:href="@{/NhanVien/edit/{Ma_NV}(Ma_NV=${NhanVien.Ma_NV})}"><i class="fas fa-edit"></i></a>
+        <a th:href="@{/NhanVien/delete/{Ma_NV}(Ma_NV=${NhanVien.Ma_NV})}" onclick="return confirm('Bạn có muốn xoá nhân viên này???')"><i class="fas fa-trash"></i></a>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
